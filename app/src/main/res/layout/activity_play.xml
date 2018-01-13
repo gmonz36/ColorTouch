@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.guillaume.colortouch.PlayActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:layout_marginStart="172dp"
+        android:text="Score :"
+        app:layout_constraintBottom_toTopOf="@+id/yellowButton"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/BackToMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="108dp"
+        android:layout_marginStart="141dp"
+        android:text="main menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/blueButton"
+        android:layout_width="164dp"
+        android:layout_height="145dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/blue_button"
+        app:layout_constraintBottom_toTopOf="@+id/BackToMenu"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/greenButton"
+        android:layout_width="164dp"
+        android:layout_height="143dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/green_button"
+        app:layout_constraintBottom_toTopOf="@+id/blueButton"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/redButton"
+        android:layout_width="164dp"
+        android:layout_height="143dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/red_button"
+        app:layout_constraintBottom_toTopOf="@+id/BackToMenu"
+        app:layout_constraintStart_toEndOf="@+id/blueButton" />
+
+    <Button
+        android:id="@+id/yellowButton"
+        android:layout_width="162dp"
+        android:layout_height="141dp"
+        android:layout_marginBottom="11dp"
+        android:layout_marginStart="26dp"
+        android:background="@drawable/yellow_button"
+        app:layout_constraintBottom_toTopOf="@+id/redButton"
+        app:layout_constraintStart_toEndOf="@+id/greenButton" />
+
+    <Button
+        android:id="@+id/play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="61dp"
+        android:layout_marginStart="141dp"
+        android:text="new game"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>
