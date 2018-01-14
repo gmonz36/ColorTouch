@@ -59,8 +59,7 @@
         android:id="@+id/yellowButton"
         android:layout_width="162dp"
         android:layout_height="141dp"
-        android:layout_marginBottom="11dp"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="24dp"
         android:background="@drawable/yellow_button"
         app:layout_constraintBottom_toTopOf="@+id/redButton"
         app:layout_constraintStart_toEndOf="@+id/greenButton" />
