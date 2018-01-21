@@ -1,6 +1,8 @@
 package com.example.guillaume.colortouch;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.media.AudioManager;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -31,13 +34,17 @@ public class PlayActivity extends AppCompatActivity {
     private Boolean playerTurn = false;
     private Boolean lost = false;
 
-    private Handler handler;
-    private Runnable task;
+    TextView currentScore;
+
+    Integer score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+
+        currentScore = (TextView) findViewById(R.id.textView2);
+        currentScore.setText("score : "+ score);
 
 
         final MediaPlayer redSound = MediaPlayer.create(PlayActivity.this,R.raw.red_beep_short);
@@ -48,7 +55,6 @@ public class PlayActivity extends AppCompatActivity {
         greenSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
         final MediaPlayer yellowSound = MediaPlayer.create(PlayActivity.this,R.raw.yellow_beep_short);
         yellowSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
 
 
         //initialize game
@@ -71,6 +77,7 @@ public class PlayActivity extends AppCompatActivity {
                     redSound.start();
                     System.out.println("red!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     if (playerTurn) {
+                        playerDisplayDelay();
                         lost = game.selectColor(0);
                         if (game.completeSequence()) {
                             game.resetPlayerSequence();
@@ -92,6 +99,7 @@ public class PlayActivity extends AppCompatActivity {
                     blueSound.start();
                     System.out.println("blue!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     if (playerTurn) {
+                        playerDisplayDelay();
                         lost = game.selectColor(1);
                         if (game.completeSequence()) {
                             game.resetPlayerSequence();
@@ -112,6 +120,7 @@ public class PlayActivity extends AppCompatActivity {
                     greenSound.start();
                     System.out.println("green!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     if (playerTurn) {
+                        playerDisplayDelay();
                         lost = game.selectColor(2);
                         if (game.completeSequence()) {
                             game.resetPlayerSequence();
@@ -133,6 +142,7 @@ public class PlayActivity extends AppCompatActivity {
                     yellowSound.start();
                     System.out.println("yellow!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     if (playerTurn) {
+                        playerDisplayDelay();
                         lost = game.selectColor(3);
                         if (game.completeSequence()) {
                             game.resetPlayerSequence();
@@ -160,6 +170,8 @@ public class PlayActivity extends AppCompatActivity {
         }
         clearClickedView();
         System.out.println("Now replay the sequence!");
+        score++;
+        updateScoreView();
     }
 
     private void lostGame() {
@@ -167,6 +179,8 @@ public class PlayActivity extends AppCompatActivity {
         System.out.println("You lost, lets start again!");
         System.out.println("-----------------------------------");
         game = new GameController();
+        score = 0;
+        updateScoreView();
     }
 
     private void setClickedView(View v) {
@@ -210,14 +224,14 @@ public class PlayActivity extends AppCompatActivity {
                                 yellowButton.callOnClick();
                                 break;
                         }
-                    }
+                    } displayDelay();
                     if(next==colorList.size()-1) {
                         playerTurn = true;
                         displayDelay();
                     }
 
                 }
-            }, 1000 * n);
+            }, 1250 * n);
 
         }
         private void displayDelay() {
@@ -231,4 +245,20 @@ public class PlayActivity extends AppCompatActivity {
                 }
             }, 500);
         }
+
+        private void updateScoreView() {
+            currentScore.setText("score : "+ score);
+        }
+
+    private void playerDisplayDelay() {
+        Handler handler1 = new Handler();
+        handler1.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                {
+                    clearClickedView();
+                }
+            }
+        }, 200);
+    }
 }
