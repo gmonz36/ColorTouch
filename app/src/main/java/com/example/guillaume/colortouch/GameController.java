@@ -51,5 +51,8 @@ public class GameController {
         }
         return false;
     }
+    public ArrayList<Integer> getList() {
+        return colorSequence;
+    }
 
 }
