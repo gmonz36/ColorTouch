@@ -9,15 +9,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="serif"
         android:text="Color Touch"
-        android:textColor="@android:color/holo_blue_bright"
-        android:textSize="64dp"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="50dp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.125" />
+        app:layout_constraintVertical_bias="0.235" />
 
     <Button
         android:id="@+id/playButton"

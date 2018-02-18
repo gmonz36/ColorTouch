@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,9 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
+        android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
+        mActionBar.hide();
+
         currentScore = (TextView) findViewById(R.id.textView2);
         currentScore.setText("score : "+ score);
 
@@ -64,6 +68,8 @@ public class PlayActivity extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 game = new GameController();
+                score = 0;
+                updateScoreView();
                 playSequence();
             }
         });
@@ -160,6 +166,11 @@ public class PlayActivity extends AppCompatActivity {
     private void playSequence() {
 
         System.out.println("listen carefully to this sequence!");
+        try {
+            if(playerTurn) Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         playerTurn = false;
         game.incSequence();
         ArrayList<Integer> colorList = game.getList();
