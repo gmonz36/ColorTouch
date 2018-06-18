@@ -1,6 +1,7 @@
 package com.example.guillaume.colortouch;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
 
 public class PlayActivity extends AppCompatActivity {
 
@@ -46,6 +48,9 @@ public class PlayActivity extends AppCompatActivity {
 
         android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
         mActionBar.hide();
+        //TODO add a sharedpreference for the game high score
+        SharedPreferences mPrefs = getSharedPreferences("BestScore", 0);
+        String mString = mPrefs.getString("Score", "0");
 
         currentScore = (TextView) findViewById(R.id.textView2);
         currentScore.setText("score : "+ score);
