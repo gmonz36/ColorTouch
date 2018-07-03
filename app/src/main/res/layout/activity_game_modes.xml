@@ -18,76 +18,95 @@
             android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/abril_fatface"
             android:text="Select a game mode"
             android:textAlignment="center"
-            android:textSize="30sp" />
+            android:textColor="@android:color/black"
+            android:textSize="30dp"
+            android:layout_marginBottom="10dp"/>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/picture_color" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/abril_fatface"
             android:text="learn how to play"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="20dp" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/tutorial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_bright"
-            android:text="tutorial" />
+            android:background="@android:color/holo_blue_dark"
+            android:fontFamily="@font/abril_fatface"
+            android:text="Tutorial"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="20dp"
+            android:layout_marginBottom="30dp"/>
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="made for beginner"
-            android:textAlignment="center" />
+            android:fontFamily="@font/abril_fatface"
+            android:text="Remember one sequence"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="20dp" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_bright"
-            android:text="easy" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="challenge for experienced player"
-            android:textAlignment="center" />
-
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_bright"
-            android:text="hard" />
+            android:background="@android:color/holo_blue_dark"
+            android:fontFamily="@font/abril_fatface"
+            android:text="Normal mode"
+            android:textAllCaps="false"
+            android:textSize="20dp"
+            android:layout_marginBottom="30dp"/>
 
         <TextView
             android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="test your limits with an always growing sequence "
-            android:textAlignment="center" />
+            android:fontFamily="@font/abril_fatface"
+            android:text="Remember a sequence that keeps growing forever"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="20dp" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/endless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_bright"
-            android:text="endless" />
+            android:background="@android:color/holo_blue_dark"
+            android:fontFamily="@font/abril_fatface"
+            android:text="Endless mode"
+            android:textAllCaps="false"
+            android:textSize="20dp" />
 
         <Button
-            android:id="@+id/button10"
+            android:id="@+id/back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
-            android:layout_marginTop="50dp"
-            android:background="@android:color/holo_blue_bright"
+            android:layout_marginTop="60dp"
+            android:background="@android:color/holo_blue_dark"
+            android:fontFamily="@font/abril_fatface"
             android:text="Back to menu"
+            android:textAllCaps="false"
+            android:textSize="20dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-            app:layout_constraintTop_toBottomOf="@+id/button7"
+            app:layout_constraintTop_toBottomOf="@+id/endless"
             tools:layout_editor_absoluteX="35dp" />
 
     </LinearLayout>

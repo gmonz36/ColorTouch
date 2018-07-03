@@ -26,6 +26,7 @@ import java.util.Iterator;
 public class PlayActivity extends AppCompatActivity {
 
     private Button play;
+    private Button back;
 
     private Button redButton;
     private Button yellowButton;
@@ -48,6 +49,14 @@ public class PlayActivity extends AppCompatActivity {
 
         android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
         mActionBar.hide();
+
+        back = (Button) findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent myIntent = new Intent(PlayActivity.this, MainActivity.class);
+                PlayActivity.this.startActivity(myIntent);
+            }
+        });
         //TODO add a sharedpreference for the game high score
         SharedPreferences mPrefs = getSharedPreferences("BestScore", 0);
         String mString = mPrefs.getString("Score", "0");
