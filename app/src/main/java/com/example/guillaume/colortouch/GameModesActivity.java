@@ -10,6 +10,7 @@ public class GameModesActivity extends AppCompatActivity {
 
     private Button endlessButton;
     private Button backButton;
+    private Button tutorialButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,14 @@ public class GameModesActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(GameModesActivity.this, MainActivity.class);
+                GameModesActivity.this.startActivity(myIntent);
+            }
+        });
+
+        tutorialButton = (Button) findViewById(R.id.endless);
+        tutorialButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent myIntent = new Intent(GameModesActivity.this, TutorialActivity.class);
                 GameModesActivity.this.startActivity(myIntent);
             }
         });
