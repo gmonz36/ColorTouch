@@ -52,7 +52,7 @@ public class PlayActivity extends AppCompatActivity {
         SharedPreferences mPrefs = getSharedPreferences("BestScore", 0);
         String mString = mPrefs.getString("Score", "0");
 
-        currentScore = (TextView) findViewById(R.id.textView2);
+        currentScore = (TextView) findViewById(R.id.score);
         currentScore.setText("score : "+ score);
 
 
