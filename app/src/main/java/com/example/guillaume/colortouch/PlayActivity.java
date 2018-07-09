@@ -18,6 +18,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v4.provider.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -46,6 +47,9 @@ public class PlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+
+        FontRequest request = new FontRequest("com.example.fontprovider",
+                "com.example.fontprovider", "abril_fatface", certs);
 
         android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
         mActionBar.hide();
@@ -237,6 +241,7 @@ public class PlayActivity extends AppCompatActivity {
                     {
                         switch (colorList.get(next)) {
                             case 0:
+                                //TODO disable button pressing when playing sequence
                                 redButton.callOnClick();
                                 break;
                             case 1:

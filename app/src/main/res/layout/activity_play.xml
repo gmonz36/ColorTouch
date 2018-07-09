@@ -117,7 +117,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@android:color/holo_blue_dark"
                     android:fontFamily="@font/abril_fatface"
-                    android:text="Replay"
+                    android:text="Remember Sequence"
                     android:textAllCaps="false"
                     android:textSize="20dp" />
 
