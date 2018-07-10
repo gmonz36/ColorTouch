@@ -82,7 +82,7 @@
                     android:layout_marginBottom="30dp"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="40dp"
-                    android:background="@drawable/red_button" />
+                    android:background="@drawable/new_red_button" />
 
                 <Button
                     android:id="@+id/yellowButton"
