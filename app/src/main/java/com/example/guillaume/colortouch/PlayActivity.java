@@ -49,11 +49,9 @@ public class PlayActivity extends AppCompatActivity {
             }
         });
         //TODO add a sharedpreference for the game high score
-        SharedPreferences mPrefs = getSharedPreferences("BestScore", 0);
-        String mString = mPrefs.getString("Score", "0");
 
         currentScore = (TextView) findViewById(R.id.score);
-        currentScore.setText("score : " + score);
+        currentScore.setText("Score : " + score);
 
 
         final MediaPlayer redSound = MediaPlayer.create(PlayActivity.this, R.raw.red_beep_short);
@@ -170,7 +168,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void playSequence() {
-        info.setText("Watch and replay the sequence");
+        info.setText("Watch and do the same sequence");
         try {
             if (playerTurn) Thread.sleep(1000);
         } catch (Exception e) {
@@ -239,6 +237,7 @@ public class PlayActivity extends AppCompatActivity {
         blueButton.setEnabled(false);
         greenButton.setEnabled(false);
         yellowButton.setEnabled(false);
+        play.setEnabled(false);
         final ArrayList<Integer> colorList = game.getList();
         Handler handler1 = new Handler();
         final int next = n;
@@ -277,6 +276,7 @@ public class PlayActivity extends AppCompatActivity {
                     blueButton.setEnabled(true);
                     greenButton.setEnabled(true);
                     yellowButton.setEnabled(true);
+                    play.setEnabled(true);
                 }
 
             }
@@ -297,7 +297,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void updateScoreView() {
-        currentScore.setText("score : " + score);
+        currentScore.setText("Score : " + score);
     }
 
     private void playerDisplayDelay() {
