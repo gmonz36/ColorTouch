@@ -48,7 +48,10 @@ public class PlayActivity extends AppCompatActivity {
                 PlayActivity.this.startActivity(myIntent);
             }
         });
-        //TODO add a sharedpreference for the game high score
+        //TODO add a sharedpreference for the game high score and options
+        SharedPreferences mPrefs = getSharedPreferences("settings", 0);
+        String sound = mPrefs.getString("normalScore", "medium");
+        String speed = mPrefs.getString("endlessScore", "normal");
 
         currentScore = (TextView) findViewById(R.id.score);
         currentScore.setText("Score : " + score);
