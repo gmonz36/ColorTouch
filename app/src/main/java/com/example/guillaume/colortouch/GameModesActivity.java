@@ -33,7 +33,7 @@ public class GameModesActivity extends AppCompatActivity {
             }
         });
 
-        tutorialButton = (Button) findViewById(R.id.endless);
+        tutorialButton = (Button) findViewById(R.id.tutorial);
         tutorialButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(GameModesActivity.this, TutorialActivity.class);

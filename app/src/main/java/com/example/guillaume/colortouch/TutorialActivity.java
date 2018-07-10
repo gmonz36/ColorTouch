@@ -18,7 +18,7 @@ public class TutorialActivity extends AppCompatActivity {
         backButton = (Button) findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(TutorialActivity.this, MainActivity.class);
+                Intent myIntent = new Intent(TutorialActivity.this, GameModesActivity.class);
                 TutorialActivity.this.startActivity(myIntent);
             }
         });

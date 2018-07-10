@@ -1,81 +1,69 @@
 package com.example.guillaume.colortouch;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.Handler;
-import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.support.v4.provider.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 
 public class PlayActivity extends AppCompatActivity {
 
+    TextView currentScore;
+    Integer score = 0;
     private Button play;
     private Button back;
-
     private Button redButton;
     private Button yellowButton;
     private Button greenButton;
     private Button blueButton;
-
     private GameController game;
-
     private Boolean playerTurn = false;
     private Boolean lost = false;
-
-    TextView currentScore;
-
-    Integer score = 0;
+    private TextView info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
-        FontRequest request = new FontRequest("com.example.fontprovider",
-                "com.example.fontprovider", "abril_fatface", certs);
-
         android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
         mActionBar.hide();
+
+        info = (TextView) findViewById(R.id.info);
 
         back = (Button) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(PlayActivity.this, MainActivity.class);
+                Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
                 PlayActivity.this.startActivity(myIntent);
             }
         });
-        //TODO add a sharedpreference for the game high score
-        SharedPreferences mPrefs = getSharedPreferences("BestScore", 0);
-        String mString = mPrefs.getString("Score", "0");
+        //TODO add a sharedpreference for the game high score and options
+        SharedPreferences mPrefs = getSharedPreferences("settings", 0);
+        String sound = mPrefs.getString("normalScore", "medium");
+        String speed = mPrefs.getString("endlessScore", "normal");
 
         currentScore = (TextView) findViewById(R.id.score);
-        currentScore.setText("score : "+ score);
+        currentScore.setText("Score : " + score);
 
 
-        final MediaPlayer redSound = MediaPlayer.create(PlayActivity.this,R.raw.red_beep_short);
+        final MediaPlayer redSound = MediaPlayer.create(PlayActivity.this, R.raw.red_beep_short);
         redSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        final MediaPlayer blueSound = MediaPlayer.create(PlayActivity.this,R.raw.blue_beep_short);
+        final MediaPlayer blueSound = MediaPlayer.create(PlayActivity.this, R.raw.blue_beep_short);
         blueSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        final MediaPlayer greenSound = MediaPlayer.create(PlayActivity.this,R.raw.green_beep_short);
+        final MediaPlayer greenSound = MediaPlayer.create(PlayActivity.this, R.raw.green_beep_short);
         greenSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        final MediaPlayer yellowSound = MediaPlayer.create(PlayActivity.this,R.raw.yellow_beep_short);
+        final MediaPlayer yellowSound = MediaPlayer.create(PlayActivity.this, R.raw.yellow_beep_short);
         yellowSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
 
@@ -93,99 +81,99 @@ public class PlayActivity extends AppCompatActivity {
         });
 
 
-            redButton = (Button) findViewById(R.id.redButton);
-            redButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    clearClickedView();
-                    setClickedView(v);
-                    redSound.start();
-                    System.out.println("red!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    if (playerTurn) {
-                        playerDisplayDelay();
-                        lost = game.selectColor(0);
-                        if (game.completeSequence()) {
-                            game.resetPlayerSequence();
-                            playSequence();
-                        }
-                        if (lost) {
-                            playerTurn = false;
-                            lostGame();
-                        }
+        redButton = (Button) findViewById(R.id.redButton);
+        redButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                clearClickedView();
+                setClickedView(v);
+                redSound.start();
+                if (playerTurn) {
+                    playerDisplayDelay();
+                    lost = game.selectColor(0);
+                    if (lost) {
+                        //playerTurn = false;
+                        lostGame();
+                        return;
+                    }
+                    if (game.completeSequence()) {
+                        game.resetPlayerSequence();
+                        playSequence();
                     }
                 }
-            });
+            }
+        });
 
-            blueButton = (Button) findViewById(R.id.blueButton);
-            blueButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    clearClickedView();
-                    setClickedView(v);
-                    blueSound.start();
-                    System.out.println("blue!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    if (playerTurn) {
-                        playerDisplayDelay();
-                        lost = game.selectColor(1);
-                        if (game.completeSequence()) {
-                            game.resetPlayerSequence();
-                            playSequence();
-                        }
-                        if (lost) {
-                            playerTurn = false;
-                            lostGame();
-                        }
+        blueButton = (Button) findViewById(R.id.blueButton);
+        blueButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                clearClickedView();
+                setClickedView(v);
+                blueSound.start();
+                if (playerTurn) {
+                    playerDisplayDelay();
+                    lost = game.selectColor(1);
+                    if (lost) {
+                        //playerTurn = false;
+                        lostGame();
+                        return;
+                    }
+                    if (game.completeSequence()) {
+                        game.resetPlayerSequence();
+                        playSequence();
                     }
                 }
-            });
-            greenButton = (Button) findViewById(R.id.greenButton);
-            greenButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    clearClickedView();
-                    setClickedView(v);
-                    greenSound.start();
-                    System.out.println("green!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    if (playerTurn) {
-                        playerDisplayDelay();
-                        lost = game.selectColor(2);
-                        if (game.completeSequence()) {
-                            game.resetPlayerSequence();
-                            playSequence();
-                        }
-                        if (lost) {
-                            playerTurn = false;
-                            lostGame();
-                        }
+            }
+        });
+        greenButton = (Button) findViewById(R.id.greenButton);
+        greenButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                clearClickedView();
+                setClickedView(v);
+                greenSound.start();
+                if (playerTurn) {
+                    playerDisplayDelay();
+                    lost = game.selectColor(2);
+                    if (lost) {
+                        //playerTurn = false;
+                        lostGame();
+                        return;
+                    }
+                    if (game.completeSequence()) {
+                        game.resetPlayerSequence();
+                        playSequence();
                     }
                 }
-            });
+            }
+        });
 
-            yellowButton = (Button) findViewById(R.id.yellowButton);
-            yellowButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    clearClickedView();
-                    setClickedView(v);
-                    yellowSound.start();
-                    System.out.println("yellow!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    if (playerTurn) {
-                        playerDisplayDelay();
-                        lost = game.selectColor(3);
-                        if (game.completeSequence()) {
-                            game.resetPlayerSequence();
-                            playSequence();
-                        }
-                        if (lost) {
-                            playerTurn = false;
-                            lostGame();
-                        }
+        yellowButton = (Button) findViewById(R.id.yellowButton);
+        yellowButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                clearClickedView();
+                setClickedView(v);
+                yellowSound.start();
+                if (playerTurn) {
+                    playerDisplayDelay();
+                    lost = game.selectColor(3);
+                    if (lost) {
+                        //playerTurn = false;
+                        lostGame();
+                        return;
                     }
+                    if (game.completeSequence()) {
+                        game.resetPlayerSequence();
+                        playSequence();
+                    }
+
                 }
-            });
+            }
+        });
     }
 
     private void playSequence() {
-
-        System.out.println("listen carefully to this sequence!");
+        info.setText("Watch and do the same sequence");
         try {
-            if(playerTurn) Thread.sleep(1000);
+            if (playerTurn) Thread.sleep(1000);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -194,19 +182,30 @@ public class PlayActivity extends AppCompatActivity {
         ArrayList<Integer> colorList = game.getList();
         displayDelay();
 
-        for(int i = 0; i<colorList.size(); i++) {
+        for (int i = 0; i < colorList.size(); i++) {
             playNext(i);
         }
         clearClickedView();
-        System.out.println("Now replay the sequence!");
         score++;
         updateScoreView();
     }
 
     private void lostGame() {
-        Toast.makeText(PlayActivity.this, "Wrong Sequence!", Toast.LENGTH_LONG).show();
-        System.out.println("You lost, lets start again!");
-        System.out.println("-----------------------------------");
+        redButton.setEnabled(false);
+        blueButton.setEnabled(false);
+        greenButton.setEnabled(false);
+        yellowButton.setEnabled(false);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("That was the wrong sequence.").setTitle("You lost the game!");
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
+                //PlayActivity.this.startActivity(myIntent);
+            }
+        });
+        builder.show();
+        info.setText("Press \"new game\" to start again");
         game = new GameController();
         score = 0;
         updateScoreView();
@@ -214,71 +213,95 @@ public class PlayActivity extends AppCompatActivity {
 
     private void setClickedView(View v) {
         Button view = (Button) v;
-        view.getBackground().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
+        view.setBackgroundResource(R.drawable.clicked_button);
+        //view.getBackground().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
         v.invalidate();
     }
 
     private void clearClickedView() {
         Button view;
         view = (Button) findViewById(R.id.redButton);
-        view.getBackground().clearColorFilter();
+        view.setBackgroundResource(R.drawable.new_red_button);
+        //view.getBackground().clearColorFilter();
         view = (Button) findViewById(R.id.blueButton);
-        view.getBackground().clearColorFilter();
+        view.setBackgroundResource(R.drawable.new_blue_button);
+        //view.getBackground().clearColorFilter();
         view = (Button) findViewById(R.id.greenButton);
-        view.getBackground().clearColorFilter();
+        view.setBackgroundResource(R.drawable.new_green_button);
+        //view.getBackground().clearColorFilter();
         view = (Button) findViewById(R.id.yellowButton);
-        view.getBackground().clearColorFilter();
+        view.setBackgroundResource(R.drawable.new_yellow_button);
+        //view.getBackground().clearColorFilter();
         view.invalidate();
     }
 
     private void playNext(int n) {
+        redButton.setEnabled(false);
+        blueButton.setEnabled(false);
+        greenButton.setEnabled(false);
+        yellowButton.setEnabled(false);
+        play.setEnabled(false);
         final ArrayList<Integer> colorList = game.getList();
         Handler handler1 = new Handler();
         final int next = n;
         handler1.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    {
-                        switch (colorList.get(next)) {
-                            case 0:
-                                //TODO disable button pressing when playing sequence
-                                redButton.callOnClick();
-                                break;
-                            case 1:
-                                blueButton.callOnClick();
-                                break;
-                            case 2:
-                                greenButton.callOnClick();
-                                break;
-                            case 3:
-                                yellowButton.callOnClick();
-                                break;
-                        }
-                    } displayDelay();
-                    if(next==colorList.size()-1) {
-                        playerTurn = true;
-                        displayDelay();
-                    }
-
-                }
-            }, 1250 * n);
-
-        }
-        private void displayDelay() {
-            Handler handler1 = new Handler();
-            handler1.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    {
-                        clearClickedView();
+            @Override
+            public void run() {
+                {
+                    switch (colorList.get(next)) {
+                        case 0:
+                            redButton.setEnabled(true);
+                            redButton.callOnClick();
+                            redButton.setEnabled(false);
+                            break;
+                        case 1:
+                            blueButton.setEnabled(true);
+                            blueButton.callOnClick();
+                            blueButton.setEnabled(false);
+                            break;
+                        case 2:
+                            greenButton.setEnabled(true);
+                            greenButton.callOnClick();
+                            greenButton.setEnabled(false);
+                            break;
+                        case 3:
+                            yellowButton.setEnabled(true);
+                            yellowButton.callOnClick();
+                            yellowButton.setEnabled(false);
+                            break;
                     }
                 }
-            }, 500);
-        }
+                displayDelay();
+                if (next == colorList.size() - 1) {
+                    playerTurn = true;
+                    displayDelay();
+                    redButton.setEnabled(true);
+                    blueButton.setEnabled(true);
+                    greenButton.setEnabled(true);
+                    yellowButton.setEnabled(true);
+                    play.setEnabled(true);
+                }
 
-        private void updateScoreView() {
-            currentScore.setText("score : "+ score);
-        }
+            }
+        }, 1250 * n);
+
+    }
+
+    private void displayDelay() {
+        Handler handler1 = new Handler();
+        handler1.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                {
+                    clearClickedView();
+                }
+            }
+        }, 500);
+    }
+
+    private void updateScoreView() {
+        currentScore.setText("Score : " + score);
+    }
 
     private void playerDisplayDelay() {
         Handler handler1 = new Handler();

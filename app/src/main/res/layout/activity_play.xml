@@ -9,62 +9,63 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="12">
 
         <TextView
             android:id="@+id/score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:fontFamily="@font/abril_fatface"
             android:text="Score :"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="25dp"
-
             tools:layout_editor_absoluteY="32dp" />
 
         <TextView
             android:id="@+id/info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:fontFamily="@font/abril_fatface"
             android:text='Press "New Game" to start'
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textSize="25dp" />
+            android:textSize="25dp"/>
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="10">
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:weightSum="2">
 
                 <Button
                     android:id="@+id/blueButton"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginBottom="35dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/new_blue_button"
                     tools:layout_editor_absoluteX="20dp" />
 
                 <Button
                     android:id="@+id/greenButton"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginBottom="35dp"
-                    android:layout_marginRight="50dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/new_green_button"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:layout_editor_absoluteY="34dp" />
@@ -73,30 +74,36 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:weightSum="2">
 
                 <Button
                     android:id="@+id/redButton"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginBottom="30dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="40dp"
-                    android:background="@drawable/red_button" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/new_red_button" />
 
                 <Button
                     android:id="@+id/yellowButton"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginBottom="30dp"
-                    android:layout_marginRight="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
                     android:background="@drawable/new_yellow_button"
                     tools:layout_editor_absoluteX="150dp" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:weightSum="2">
 
                 <Button
                     android:id="@+id/play"
@@ -104,7 +111,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@android:color/holo_blue_dark"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
                     android:fontFamily="@font/abril_fatface"
                     android:text="New Game"
                     android:textAllCaps="false"
@@ -115,9 +123,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:background="@android:color/holo_blue_dark"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
                     android:fontFamily="@font/abril_fatface"
-                    android:text="Remember Sequence"
+                    android:text="Replay sequence"
                     android:textAllCaps="false"
                     android:textSize="20dp" />
 
@@ -125,7 +134,9 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:weightSum="2">
 
                 <Button
                     android:id="@+id/help"
@@ -133,8 +144,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@android:color/holo_blue_dark"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
                     android:fontFamily="@font/abril_fatface"
                     android:text="Help"
                     android:textAllCaps="false"
@@ -145,8 +157,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@android:color/holo_blue_dark"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
                     android:fontFamily="@font/abril_fatface"
                     android:text="Back to menu"
                     android:textAllCaps="false"

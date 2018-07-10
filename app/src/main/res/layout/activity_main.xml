@@ -10,14 +10,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="6">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
-            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:layout_weight="0.5"
             android:fontFamily="@font/abril_fatface"
             android:text="Color Touch"
             android:textAlignment="center"
@@ -33,19 +34,19 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/colored_balls"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="2"
+            app:srcCompat="@drawable/colored_balls" />
 
         <Button
             android:id="@+id/playButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/button_background"
             android:fontFamily="@font/abril_fatface"
             android:text="Play"
             android:textAllCaps="false"
@@ -53,15 +54,15 @@
             android:textSize="30dp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/scoresButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/button_background"
             android:fontFamily="@font/abril_fatface"
             android:text="View High Scores"
             android:textAllCaps="false"
-            android:layout_marginBottom="20dp"
             android:textColor="@android:color/black"
             android:textSize="30dp" />
 
@@ -69,9 +70,9 @@
             android:id="@+id/settingsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/button_background"
             android:fontFamily="@font/abril_fatface"
             android:text="Settings"
             android:textAllCaps="false"

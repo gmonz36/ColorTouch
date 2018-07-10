@@ -37,7 +37,7 @@
             android:id="@+id/back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/button_background"
             android:fontFamily="@font/abril_fatface"
             android:text="Back to menu"
             android:textColor="@android:color/black"
