@@ -1,5 +1,6 @@
 package com.example.guillaume.colortouch;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -10,6 +11,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -200,12 +202,22 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void lostGame() {
-        Toast.makeText(PlayActivity.this, "Wrong Sequence!", Toast.LENGTH_LONG).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("That was the wrong sequence.").setTitle("You lost the game!");
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+               //TODO might have to implement something here
+            }
+        });
+        builder.show();
+        //Toast.makeText(PlayActivity.this, "Wrong Sequence!", Toast.LENGTH_LONG).show();
         System.out.println("You lost, lets start again!");
         System.out.println("-----------------------------------");
-        game = new GameController();
-        score = 0;
-        updateScoreView();
+        //game = new GameController();
+        //score = 0;
+        //updateScoreView();
+        Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
+        PlayActivity.this.startActivity(myIntent);
     }
 
     private void setClickedView(View v) {
@@ -228,6 +240,10 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void playNext(int n) {
+        redButton.setEnabled(false);
+        blueButton.setEnabled(false);
+        greenButton.setEnabled(false);
+        yellowButton.setEnabled(false);
         final ArrayList<Integer> colorList = game.getList();
         Handler handler1 = new Handler();
         final int next = n;
@@ -237,22 +253,34 @@ public class PlayActivity extends AppCompatActivity {
                     {
                         switch (colorList.get(next)) {
                             case 0:
+                                redButton.setEnabled(true);
                                 redButton.callOnClick();
+                                redButton.setEnabled(false);
                                 break;
                             case 1:
+                                blueButton.setEnabled(true);
                                 blueButton.callOnClick();
+                                blueButton.setEnabled(false);
                                 break;
                             case 2:
+                                greenButton.setEnabled(true);
                                 greenButton.callOnClick();
+                                greenButton.setEnabled(false);
                                 break;
                             case 3:
+                                yellowButton.setEnabled(true);
                                 yellowButton.callOnClick();
+                                yellowButton.setEnabled(false);
                                 break;
                         }
                     } displayDelay();
                     if(next==colorList.size()-1) {
                         playerTurn = true;
                         displayDelay();
+                        redButton.setEnabled(true);
+                        blueButton.setEnabled(true);
+                        greenButton.setEnabled(true);
+                        yellowButton.setEnabled(true);
                     }
 
                 }
