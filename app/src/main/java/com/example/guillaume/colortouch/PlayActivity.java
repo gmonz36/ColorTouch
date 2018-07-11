@@ -172,22 +172,27 @@ public class PlayActivity extends AppCompatActivity {
 
     private void playSequence() {
         info.setText("Watch and do the same sequence");
-        try {
-            if (playerTurn) Thread.sleep(1000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        playerTurn = false;
-        game.incSequence();
-        ArrayList<Integer> colorList = game.getList();
-        displayDelay();
+        Handler handler1 = new Handler();
+        handler1.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                {
+                    clearClickedView();
+                    playerTurn = false;
+                    game.incSequence();
+                    ArrayList<Integer> colorList = game.getList();
+                    //displayDelay();
 
-        for (int i = 0; i < colorList.size(); i++) {
-            playNext(i);
-        }
-        clearClickedView();
-        score++;
-        updateScoreView();
+                    for (int i = 0; i < colorList.size(); i++) {
+                        playNext(i);
+                    }
+                    clearClickedView();
+                    score++;
+                    updateScoreView();
+                }
+            }
+        }, 1000);
+
     }
 
     private void lostGame() {
