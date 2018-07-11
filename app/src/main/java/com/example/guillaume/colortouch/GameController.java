@@ -51,6 +51,13 @@ public class GameController {
         }
         return false;
     }
+
+    public void createFixedSequence(int size) {
+        for (int i=0;i<size;i++) {
+            Integer next = random.nextInt(4);
+            colorSequence.add(next);
+        }
+    }
     public ArrayList<Integer> getList() {
         return colorSequence;
     }
