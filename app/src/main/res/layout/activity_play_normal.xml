@@ -55,7 +55,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/new_blue_button"
+                    android:background="@drawable/bb"
                     tools:layout_editor_absoluteX="20dp" />
 
                 <Button
@@ -66,7 +66,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/new_green_button"
+                    android:background="@drawable/gb"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:layout_editor_absoluteY="34dp" />
 
@@ -86,7 +86,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
-                    android:background="@drawable/new_red_button" />
+                    android:background="@drawable/rb" />
 
                 <Button
                     android:id="@+id/yellowButton"
@@ -95,14 +95,14 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
-                    android:background="@drawable/new_yellow_button"
+                    android:background="@drawable/yb"
                     tools:layout_editor_absoluteX="150dp" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2.5"
                 android:weightSum="2">
 
                 <Button
@@ -112,7 +112,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/button_background"
+                    android:background="@drawable/high_res_button"
                     android:fontFamily="@font/abril_fatface"
                     android:text="New Game"
                     android:textAllCaps="false"
@@ -124,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/button_background"
+                    android:background="@drawable/high_res_button"
                     android:fontFamily="@font/abril_fatface"
                     android:text="Replay sequence"
                     android:textAllCaps="false"
@@ -135,7 +135,7 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2.5"
                 android:weightSum="2">
 
                 <Button
@@ -146,7 +146,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/button_background"
+                    android:background="@drawable/high_res_button"
                     android:fontFamily="@font/abril_fatface"
                     android:text="Help"
                     android:textAllCaps="false"
@@ -159,7 +159,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/button_background"
+                    android:background="@drawable/high_res_button"
                     android:fontFamily="@font/abril_fatface"
                     android:text="Back to menu"
                     android:textAllCaps="false"

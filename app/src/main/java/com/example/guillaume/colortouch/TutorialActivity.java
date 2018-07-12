@@ -15,6 +15,9 @@ public class TutorialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
 
+        android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
+        mActionBar.hide();
+
         backButton = (Button) findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

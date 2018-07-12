@@ -31,10 +31,12 @@ public class PlayNormalActivity extends AppCompatActivity {
     private Button greenButton;
     private Button blueButton;
     private GameController game;
-    private Boolean playerTurn = false;
+    private Boolean playerTurn = true;
     private Boolean lost = false;
     private TextView info;
     private int size = 0;
+    private int topScore;
+    private SharedPreferences mPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class PlayNormalActivity extends AppCompatActivity {
         back = (Button) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if(!playerTurn) System.exit(0);
                 Intent myIntent = new Intent(PlayNormalActivity.this, GameModesActivity.class);
                 PlayNormalActivity.this.startActivity(myIntent);
             }
@@ -61,9 +64,9 @@ public class PlayNormalActivity extends AppCompatActivity {
                 AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(PlayNormalActivity.this);
 
                 dlgAlert.setMessage("There's four buttons(blue, red, green and yellow). You have to watch the sequence " +
-                        "as shown to you with in the exact same order and repeat it, if you don't remember the sequence, you can click on" +
-                        "replay sequence. You will have your score displayed at the bottom of the game and a text message that will guide " +
-                        "throughout the game. Have fun !! ");
+                        "as shown to you and repeat it in the exact same order, if you don't remember the sequence, you can click on" +
+                        " replay sequence. You will have your score displayed at the top of the screen and a text message that will guide " +
+                        " you throughout the game. Have fun !! ");
                 dlgAlert.setTitle("Game general description");
                 dlgAlert.setPositiveButton("OK", null);
                 dlgAlert.setCancelable(false);
@@ -79,8 +82,10 @@ public class PlayNormalActivity extends AppCompatActivity {
         });
 
         //TODO add a sharedpreference for the game high score and options
-        SharedPreferences mPrefs = getSharedPreferences("settings", 0);
-        String topScore = mPrefs.getString("normalScore", "0");
+
+        mPrefs = getSharedPreferences("BestScores", 0);
+        String bestScore = mPrefs.getString("normalScore", "0");
+        topScore = Integer.parseInt(bestScore);
 
         currentScore = (TextView) findViewById(R.id.score);
         currentScore.setText("Score : " + score);
@@ -214,10 +219,16 @@ public class PlayNormalActivity extends AppCompatActivity {
                 }
             }
         });
+
+        redButton.setEnabled(false);
+        blueButton.setEnabled(false);
+        greenButton.setEnabled(false);
+        yellowButton.setEnabled(false);
     }
 
 
     private void playSequence() {
+        playerTurn = false;
         info.setText("Watch and do the same sequence");
         try {
             if (playerTurn) Thread.sleep(1000);
@@ -238,16 +249,32 @@ public class PlayNormalActivity extends AppCompatActivity {
         blueButton.setEnabled(false);
         greenButton.setEnabled(false);
         yellowButton.setEnabled(false);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(false);
-        builder.setMessage("That was the wrong sequence.").setTitle("You lost the game!");
-        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //Intent myIntent = new Intent(PlayNormalActivity.this, GameModesActivity.class);
-                //PlayNormalActivity.this.startActivity(myIntent);
-            }
-        });
-        builder.show();
+        if(score > topScore) {
+            SharedPreferences.Editor mEditor = mPrefs.edit();
+            mEditor.putString("normalScore", score.toString()).commit();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setMessage("Congratulation!").setTitle("New high score!");
+            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    //Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
+                    //PlayActivity.this.startActivity(myIntent);
+                }
+            });
+            builder.show();
+        }
+        else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setMessage("That was the wrong sequence.").setTitle("You lost the game!");
+            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    //Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
+                    //PlayActivity.this.startActivity(myIntent);
+                }
+            });
+            builder.show();
+        }
         info.setText("Press \"new game\" to start again");
         game = new GameController();
         score = 0;
@@ -256,7 +283,7 @@ public class PlayNormalActivity extends AppCompatActivity {
 
     private void setClickedView(View v) {
         Button view = (Button) v;
-        view.setBackgroundResource(R.drawable.clicked_button);
+        view.setBackgroundResource(R.drawable.darkb);
         //view.getBackground().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
         v.invalidate();
     }
@@ -264,16 +291,16 @@ public class PlayNormalActivity extends AppCompatActivity {
     private void clearClickedView() {
         Button view;
         view = (Button) findViewById(R.id.redButton);
-        view.setBackgroundResource(R.drawable.new_red_button);
+        view.setBackgroundResource(R.drawable.rb);
         //view.getBackground().clearColorFilter();
         view = (Button) findViewById(R.id.blueButton);
-        view.setBackgroundResource(R.drawable.new_blue_button);
+        view.setBackgroundResource(R.drawable.bb);
         //view.getBackground().clearColorFilter();
         view = (Button) findViewById(R.id.greenButton);
-        view.setBackgroundResource(R.drawable.new_green_button);
+        view.setBackgroundResource(R.drawable.gb);
         //view.getBackground().clearColorFilter();
         view = (Button) findViewById(R.id.yellowButton);
-        view.setBackgroundResource(R.drawable.new_yellow_button);
+        view.setBackgroundResource(R.drawable.yb);
         //view.getBackground().clearColorFilter();
         view.invalidate();
     }
@@ -284,6 +311,7 @@ public class PlayNormalActivity extends AppCompatActivity {
         greenButton.setEnabled(false);
         yellowButton.setEnabled(false);
         play.setEnabled(false);
+        replay.setEnabled(false);
         final ArrayList<Integer> colorList = game.getList();
         Handler handler1 = new Handler();
         final int next = n;
@@ -323,6 +351,7 @@ public class PlayNormalActivity extends AppCompatActivity {
                     greenButton.setEnabled(true);
                     yellowButton.setEnabled(true);
                     play.setEnabled(true);
+                    replay.setEnabled(true);
                 }
 
             }
@@ -364,12 +393,17 @@ public class PlayNormalActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setMessage("Enter below the size of the sequence you want to remember. Pick a size between 2 and 999.").setTitle("Game setup");
+        builder.setNegativeButton("back",  new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 String number = String.valueOf(taskEditText.getText());
                 try {
                     int value = Integer.parseInt(number);
                     if(1 < value && value < 1000) {
+                        Toast.makeText(PlayNormalActivity.this, "Watch the sequence!", Toast.LENGTH_SHORT).show();
                         size = value;
                         game.createFixedSequence(size);
                         playSequence();
@@ -392,14 +426,30 @@ public class PlayNormalActivity extends AppCompatActivity {
         blueButton.setEnabled(false);
         greenButton.setEnabled(false);
         yellowButton.setEnabled(false);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(false);
-        builder.setMessage("You repeated the sequence succesfully").setTitle("You won the game!");
-        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-            }
-        });
-        builder.show();
+        if(score > topScore) {
+            SharedPreferences.Editor mEditor = mPrefs.edit();
+            mEditor.putString("normalScore", score.toString()).commit();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setMessage("Congratulation!").setTitle("New high score!");
+            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    //Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
+                    //PlayActivity.this.startActivity(myIntent);
+                }
+            });
+            builder.show();
+        }
+        else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setMessage("You repeated the sequence succesfully").setTitle("You won the game!");
+            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            });
+            builder.show();
+        }
     }
 
     public int getMaxScore(){

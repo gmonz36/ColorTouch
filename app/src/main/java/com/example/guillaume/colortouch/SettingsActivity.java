@@ -19,6 +19,9 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
+        mActionBar.hide();
+
         SharedPreferences mPrefs = getSharedPreferences("settings", 0);
         String sound = mPrefs.getString("normalScore", "medium");
         String speed = mPrefs.getString("endlessScore", "normal");

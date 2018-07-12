@@ -20,6 +20,13 @@ public class scoresActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scores);
+<<<<<<< HEAD
+=======
+
+        android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
+        mActionBar.hide();
+
+>>>>>>> 27c29d86b8ac046ddd081d2e7a02fbd8947879f8
         SharedPreferences mPrefs = getSharedPreferences("BestScores", 0);
         String normalScore = mPrefs.getString("normalScore", Integer.toString(normActivity.getMaxScore()));
         String endlessScore = mPrefs.getString("endlessScore", Integer.toString(activity.getMaxScore()));

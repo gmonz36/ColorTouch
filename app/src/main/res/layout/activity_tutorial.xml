@@ -9,35 +9,46 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="100">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.5"
             android:fontFamily="@font/abril_fatface"
             android:text="How to play"
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="40dp"
             android:textSize="30dp" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="70"
+            app:srcCompat="@drawable/tuto" />
 
         <TextView
             android:id="@+id/explanations"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_weight="0.5"
             android:fontFamily="@font/abril_fatface"
             android:text="The goal of this game is to improve your memory. You will have to watch and listen carefully to a sequence of colors/sounds and then repeat it in the same order."
             android:textColor="@android:color/black"
-            android:layout_marginBottom="40dp"
             android:textSize="18dp" />
 
         <Button
             android:id="@+id/back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_background"
+            android:layout_weight="50"
+            android:background="@drawable/high_res_button"
             android:fontFamily="@font/abril_fatface"
             android:text="Back to menu"
             android:textColor="@android:color/black"
