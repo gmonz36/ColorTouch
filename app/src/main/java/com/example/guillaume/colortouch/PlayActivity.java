@@ -218,6 +218,11 @@ public class PlayActivity extends AppCompatActivity {
                 }
             }
         });
+
+        redButton.setEnabled(false);
+        blueButton.setEnabled(false);
+        greenButton.setEnabled(false);
+        yellowButton.setEnabled(false);
     }
 
     private void playSequence() {
