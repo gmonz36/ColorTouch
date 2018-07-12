@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -28,14 +29,24 @@ public class PlayActivity extends AppCompatActivity {
     private Button greenButton;
     private Button blueButton;
     private GameController game;
-    private Boolean playerTurn = false;
+    private Boolean playerTurn = true;
     private Boolean lost = false;
     private TextView info;
+    private Button replay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+
+        final MediaPlayer redSound = MediaPlayer.create(PlayActivity.this, R.raw.red_beep_short);
+        redSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        final MediaPlayer blueSound = MediaPlayer.create(PlayActivity.this, R.raw.blue_beep_short);
+        blueSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        final MediaPlayer greenSound = MediaPlayer.create(PlayActivity.this, R.raw.green_beep_short);
+        greenSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        final MediaPlayer yellowSound = MediaPlayer.create(PlayActivity.this, R.raw.yellow_beep_short);
+        yellowSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
         mActionBar.hide();
@@ -48,9 +59,9 @@ public class PlayActivity extends AppCompatActivity {
                 AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(PlayActivity.this);
 
                 dlgAlert.setMessage("There's four buttons(blue, red, green and yellow). You have to watch the sequence " +
-                        "as shown to you with in the exact same order and repeat it, if you don't remember the sequence, you can click on" +
-                        "replay sequence. You will have your score displayed at the bottom of the game and a text message that will guide " +
-                        "throughout the game. Have fun !! ");
+                        "as shown to you and repeat it in the exact same order, if you don't remember the sequence, you can click on" +
+                        " replay sequence. You will have your score displayed at the top of the screen and a text message that will guide " +
+                        "you throughout the game. Have fun !! ");
                 dlgAlert.setTitle("Game general description");
                 dlgAlert.setPositiveButton("OK", null);
                 dlgAlert.setCancelable(false);
@@ -68,10 +79,21 @@ public class PlayActivity extends AppCompatActivity {
         back = (Button) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if(!playerTurn) System.exit(0);
                 Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
                 PlayActivity.this.startActivity(myIntent);
             }
         });
+
+        replay = (Button) findViewById(R.id.replay);
+        replay.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                replaySequence();
+            }
+        });
+
+        replay.setEnabled(false);
+
         //TODO add a sharedpreference for the game high score and options
         SharedPreferences mPrefs = getSharedPreferences("settings", 0);
         String sound = mPrefs.getString("normalScore", "medium");
@@ -80,23 +102,13 @@ public class PlayActivity extends AppCompatActivity {
         currentScore = (TextView) findViewById(R.id.score);
         currentScore.setText("Score : " + score);
 
-
-        final MediaPlayer redSound = MediaPlayer.create(PlayActivity.this, R.raw.red_beep_short);
-        redSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        final MediaPlayer blueSound = MediaPlayer.create(PlayActivity.this, R.raw.blue_beep_short);
-        blueSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        final MediaPlayer greenSound = MediaPlayer.create(PlayActivity.this, R.raw.green_beep_short);
-        greenSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        final MediaPlayer yellowSound = MediaPlayer.create(PlayActivity.this, R.raw.yellow_beep_short);
-        yellowSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
-
         //initialize game
         game = new GameController();
 
         play = (Button) findViewById(R.id.play);
         play.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Toast.makeText(PlayActivity.this, "Watch the sequence!", Toast.LENGTH_SHORT).show();
                 game = new GameController();
                 score = 0;
                 updateScoreView();
@@ -121,6 +133,8 @@ public class PlayActivity extends AppCompatActivity {
                     }
                     if (game.completeSequence()) {
                         game.resetPlayerSequence();
+                        score++;
+                        updateScoreView();
                         playSequence();
                     }
                 }
@@ -143,6 +157,8 @@ public class PlayActivity extends AppCompatActivity {
                     }
                     if (game.completeSequence()) {
                         game.resetPlayerSequence();
+                        score++;
+                        updateScoreView();
                         playSequence();
                     }
                 }
@@ -164,6 +180,8 @@ public class PlayActivity extends AppCompatActivity {
                     }
                     if (game.completeSequence()) {
                         game.resetPlayerSequence();
+                        score++;
+                        updateScoreView();
                         playSequence();
                     }
                 }
@@ -186,6 +204,8 @@ public class PlayActivity extends AppCompatActivity {
                     }
                     if (game.completeSequence()) {
                         game.resetPlayerSequence();
+                        score++;
+                        updateScoreView();
                         playSequence();
                     }
 
@@ -195,6 +215,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void playSequence() {
+        playerTurn = false;
         info.setText("Watch and do the same sequence");
         Handler handler1 = new Handler();
         handler1.postDelayed(new Runnable() {
@@ -211,8 +232,27 @@ public class PlayActivity extends AppCompatActivity {
                         playNext(i);
                     }
                     clearClickedView();
-                    score++;
-                    updateScoreView();
+                }
+            }
+        }, 1000);
+    }
+
+    private void replaySequence() {
+        playerTurn = false;
+        info.setText("Watch and do the same sequence");
+        Handler handler1 = new Handler();
+        handler1.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                {
+                    clearClickedView();
+                    playerTurn = false;
+                    ArrayList<Integer> colorList = game.getList();
+
+                    for (int i = 0; i < colorList.size(); i++) {
+                        playNext(i);
+                    }
+                    clearClickedView();
                 }
             }
         }, 1000);
@@ -224,6 +264,7 @@ public class PlayActivity extends AppCompatActivity {
         blueButton.setEnabled(false);
         greenButton.setEnabled(false);
         yellowButton.setEnabled(false);
+        replay.setEnabled(false);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setMessage("That was the wrong sequence.").setTitle("You lost the game!");
@@ -270,6 +311,7 @@ public class PlayActivity extends AppCompatActivity {
         greenButton.setEnabled(false);
         yellowButton.setEnabled(false);
         play.setEnabled(false);
+        replay.setEnabled(false);
         final ArrayList<Integer> colorList = game.getList();
         Handler handler1 = new Handler();
         final int next = n;
@@ -309,6 +351,7 @@ public class PlayActivity extends AppCompatActivity {
                     greenButton.setEnabled(true);
                     yellowButton.setEnabled(true);
                     play.setEnabled(true);
+                    replay.setEnabled(true);
                 }
 
             }

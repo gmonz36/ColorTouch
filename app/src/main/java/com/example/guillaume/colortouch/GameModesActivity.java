@@ -18,6 +18,9 @@ public class GameModesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_modes);
 
+        android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
+        mActionBar.hide();
+
         endlessButton = (Button) findViewById(R.id.endless);
         endlessButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

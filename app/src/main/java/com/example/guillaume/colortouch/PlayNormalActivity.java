@@ -31,7 +31,7 @@ public class PlayNormalActivity extends AppCompatActivity {
     private Button greenButton;
     private Button blueButton;
     private GameController game;
-    private Boolean playerTurn = false;
+    private Boolean playerTurn = true;
     private Boolean lost = false;
     private TextView info;
     private int size = 0;
@@ -50,6 +50,7 @@ public class PlayNormalActivity extends AppCompatActivity {
         back = (Button) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if(!playerTurn) System.exit(0);
                 Intent myIntent = new Intent(PlayNormalActivity.this, GameModesActivity.class);
                 PlayNormalActivity.this.startActivity(myIntent);
             }
@@ -61,9 +62,9 @@ public class PlayNormalActivity extends AppCompatActivity {
                 AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(PlayNormalActivity.this);
 
                 dlgAlert.setMessage("There's four buttons(blue, red, green and yellow). You have to watch the sequence " +
-                        "as shown to you with in the exact same order and repeat it, if you don't remember the sequence, you can click on" +
-                        "replay sequence. You will have your score displayed at the bottom of the game and a text message that will guide " +
-                        "throughout the game. Have fun !! ");
+                        "as shown to you and repeat it in the exact same order, if you don't remember the sequence, you can click on" +
+                        " replay sequence. You will have your score displayed at the top of the screen and a text message that will guide " +
+                        " you throughout the game. Have fun !! ");
                 dlgAlert.setTitle("Game general description");
                 dlgAlert.setPositiveButton("OK", null);
                 dlgAlert.setCancelable(false);
@@ -218,6 +219,7 @@ public class PlayNormalActivity extends AppCompatActivity {
 
 
     private void playSequence() {
+        playerTurn = false;
         info.setText("Watch and do the same sequence");
         try {
             if (playerTurn) Thread.sleep(1000);
@@ -284,6 +286,7 @@ public class PlayNormalActivity extends AppCompatActivity {
         greenButton.setEnabled(false);
         yellowButton.setEnabled(false);
         play.setEnabled(false);
+        replay.setEnabled(false);
         final ArrayList<Integer> colorList = game.getList();
         Handler handler1 = new Handler();
         final int next = n;
@@ -323,6 +326,7 @@ public class PlayNormalActivity extends AppCompatActivity {
                     greenButton.setEnabled(true);
                     yellowButton.setEnabled(true);
                     play.setEnabled(true);
+                    replay.setEnabled(true);
                 }
 
             }
@@ -370,6 +374,7 @@ public class PlayNormalActivity extends AppCompatActivity {
                 try {
                     int value = Integer.parseInt(number);
                     if(1 < value && value < 1000) {
+                        Toast.makeText(PlayNormalActivity.this, "Watch the sequence!", Toast.LENGTH_SHORT).show();
                         size = value;
                         game.createFixedSequence(size);
                         playSequence();

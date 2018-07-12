@@ -119,7 +119,7 @@
                     android:textSize="20dp" />
 
                 <Button
-                    android:id="@+id/Replay"
+                    android:id="@+id/replay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
