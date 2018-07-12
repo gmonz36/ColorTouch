@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/abril_fatface"
-            android:text="Normal mode best score :"
+            android:text="Normal mode high score :"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="25dp" />
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/abril_fatface"
-            android:text="Endless mode best score : "
+            android:text="Endless mode high score : "
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="25dp" />

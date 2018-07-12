@@ -33,6 +33,8 @@ public class PlayActivity extends AppCompatActivity {
     private Boolean lost = false;
     private TextView info;
     private Button replay;
+    SharedPreferences mPrefs;
+    Integer topScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,9 +97,13 @@ public class PlayActivity extends AppCompatActivity {
         replay.setEnabled(false);
 
         //TODO add a sharedpreference for the game high score and options
-        SharedPreferences mPrefs = getSharedPreferences("settings", 0);
+        mPrefs = getSharedPreferences("settings", 0);
         String sound = mPrefs.getString("normalScore", "medium");
         String speed = mPrefs.getString("endlessScore", "normal");
+
+        mPrefs = getSharedPreferences("BestScores", 0);
+        String bestScore = mPrefs.getString("endlessScore", "0");
+        topScore = Integer.parseInt(bestScore);
 
         currentScore = (TextView) findViewById(R.id.score);
         currentScore.setText("Score : " + score);
@@ -265,16 +271,32 @@ public class PlayActivity extends AppCompatActivity {
         greenButton.setEnabled(false);
         yellowButton.setEnabled(false);
         replay.setEnabled(false);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(false);
-        builder.setMessage("That was the wrong sequence.").setTitle("You lost the game!");
-        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
-                //PlayActivity.this.startActivity(myIntent);
-            }
-        });
-        builder.show();
+        if(score > topScore) {
+            SharedPreferences.Editor mEditor = mPrefs.edit();
+            mEditor.putString("endlessScore", score.toString()).commit();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setMessage("Congratulation!").setTitle("New high score!");
+            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    //Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
+                    //PlayActivity.this.startActivity(myIntent);
+                }
+            });
+            builder.show();
+        }
+        else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setMessage("That was the wrong sequence.").setTitle("You lost the game!");
+            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    //Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
+                    //PlayActivity.this.startActivity(myIntent);
+                }
+            });
+            builder.show();
+        }
         info.setText("Press \"new game\" to start again");
         game = new GameController();
         score = 0;
