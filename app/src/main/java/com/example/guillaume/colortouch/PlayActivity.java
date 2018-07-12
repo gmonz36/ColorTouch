@@ -305,7 +305,7 @@ public class PlayActivity extends AppCompatActivity {
 
     private void setClickedView(View v) {
         Button view = (Button) v;
-        view.setBackgroundResource(R.drawable.clicked_button);
+        view.setBackgroundResource(R.drawable.darkb);
         //view.getBackground().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
         v.invalidate();
     }
@@ -313,16 +313,16 @@ public class PlayActivity extends AppCompatActivity {
     private void clearClickedView() {
         Button view;
         view = (Button) findViewById(R.id.redButton);
-        view.setBackgroundResource(R.drawable.new_red_button);
+        view.setBackgroundResource(R.drawable.rb);
         //view.getBackground().clearColorFilter();
         view = (Button) findViewById(R.id.blueButton);
-        view.setBackgroundResource(R.drawable.new_blue_button);
+        view.setBackgroundResource(R.drawable.bb);
         //view.getBackground().clearColorFilter();
         view = (Button) findViewById(R.id.greenButton);
-        view.setBackgroundResource(R.drawable.new_green_button);
+        view.setBackgroundResource(R.drawable.gb);
         //view.getBackground().clearColorFilter();
         view = (Button) findViewById(R.id.yellowButton);
-        view.setBackgroundResource(R.drawable.new_yellow_button);
+        view.setBackgroundResource(R.drawable.yb);
         //view.getBackground().clearColorFilter();
         view.invalidate();
     }

@@ -10,31 +10,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="8">
+        android:weightSum="24">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="0.05"
             android:fontFamily="@font/abril_fatface"
             android:text="High Scores"
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textSize="40dp"
-            android:layout_weight="2"/>
+            android:textSize="40dp" />
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/picture_color" />
+            android:layout_weight="16"
+            app:srcCompat="@drawable/trophy" />
 
         <TextView
             android:id="@+id/subtitle1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.25"
             android:fontFamily="@font/abril_fatface"
             android:text="Normal mode high score :"
             android:textAlignment="center"
@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_weight="1"
+            android:layout_weight="0.25"
             android:fontFamily="@font/abril_fatface"
             android:text="0"
             android:textAlignment="center"
@@ -57,7 +57,7 @@
             android:id="@+id/subtitle2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.25"
             android:fontFamily="@font/abril_fatface"
             android:text="Endless mode high score : "
             android:textAlignment="center"
@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:layout_weight="1"
+            android:layout_weight="0.25"
             android:fontFamily="@font/abril_fatface"
             android:text="0"
             android:textAlignment="center"
@@ -80,13 +80,13 @@
             android:id="@+id/back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/button_background"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="10"
+            android:background="@drawable/high_res_button"
             android:fontFamily="@font/abril_fatface"
             android:text="Back to main menu"
             android:textAllCaps="false"
-            android:textSize="20dp"
-            android:layout_marginBottom="10dp"/>
+            android:textSize="20dp" />
 
     </LinearLayout>
 
