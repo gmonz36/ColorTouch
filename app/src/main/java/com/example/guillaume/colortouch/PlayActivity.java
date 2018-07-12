@@ -343,4 +343,8 @@ public class PlayActivity extends AppCompatActivity {
             }
         }, 200);
     }
+
+    public int getMaxScore(){
+        return score;
+    }
 }

@@ -13,15 +13,16 @@ public class scoresActivity extends AppCompatActivity {
     private Button backButton;
     private TextView endlessTopScore;
     private TextView normalTopScore;
+    private PlayNormalActivity normActivity = new PlayNormalActivity();
+    private PlayActivity activity = new PlayActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scores);
-
         SharedPreferences mPrefs = getSharedPreferences("BestScores", 0);
-        String normalScore = mPrefs.getString("normalScore", "0");
-        String endlessScore = mPrefs.getString("endlessScore", "0");
+        String normalScore = mPrefs.getString("normalScore", Integer.toString(normActivity.getMaxScore()));
+        String endlessScore = mPrefs.getString("endlessScore", Integer.toString(activity.getMaxScore()));
 
         endlessTopScore = (TextView) findViewById(R.id.endlessScore);
         endlessTopScore.setText(endlessScore);

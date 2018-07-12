@@ -401,4 +401,8 @@ public class PlayNormalActivity extends AppCompatActivity {
         });
         builder.show();
     }
+
+    public int getMaxScore(){
+           return score;
+    }
 }
