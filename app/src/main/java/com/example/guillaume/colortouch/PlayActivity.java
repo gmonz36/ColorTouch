@@ -22,6 +22,7 @@ public class PlayActivity extends AppCompatActivity {
     Integer score = 0;
     private Button play;
     private Button back;
+    private Button help;
     private Button redButton;
     private Button yellowButton;
     private Button greenButton;
@@ -40,6 +41,29 @@ public class PlayActivity extends AppCompatActivity {
         mActionBar.hide();
 
         info = (TextView) findViewById(R.id.info);
+
+        help = (Button) findViewById(R.id.help);
+        help.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(PlayActivity.this);
+
+                dlgAlert.setMessage("There's four buttons(blue, red, green and yellow). You have to watch the sequence " +
+                        "as shown to you with in the exact same order and repeat it, if you don't remember the sequence, you can click on" +
+                        "replay sequence. You will have your score displayed at the bottom of the game and a text message that will guide " +
+                        "throughout the game. Have fun !! ");
+                dlgAlert.setTitle("Game general description");
+                dlgAlert.setPositiveButton("OK", null);
+                dlgAlert.setCancelable(false);
+                dlgAlert.create().show();
+
+                dlgAlert.setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+            }
+        });
 
         back = (Button) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
