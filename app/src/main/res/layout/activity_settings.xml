@@ -23,6 +23,13 @@
             android:textColor="@android:color/black"
             android:textSize="30dp" />
 
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="18"
+            app:srcCompat="@drawable/settings" />
+
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
@@ -137,7 +144,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:layout_weight="25"
+            android:layout_weight="15"
             android:background="@drawable/high_res_button"
             android:fontFamily="@font/abril_fatface"
             android:text="Save changes"
@@ -149,7 +156,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_weight="25"
+            android:layout_weight="15"
             android:background="@drawable/high_res_button"
             android:fontFamily="@font/abril_fatface"
             android:text="Back to main menu"
