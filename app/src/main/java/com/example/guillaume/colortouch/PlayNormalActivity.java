@@ -25,6 +25,7 @@ public class PlayNormalActivity extends AppCompatActivity {
     private Button play;
     private Button replay;
     private Button back;
+    private Button help;
     private Button redButton;
     private Button yellowButton;
     private Button greenButton;
@@ -53,6 +54,30 @@ public class PlayNormalActivity extends AppCompatActivity {
                 PlayNormalActivity.this.startActivity(myIntent);
             }
         });
+
+        help = (Button) findViewById(R.id.help);
+        help.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(PlayNormalActivity.this);
+
+                dlgAlert.setMessage("There's four buttons(blue, red, green and yellow). You have to watch the sequence " +
+                        "as shown to you with in the exact same order and repeat it, if you don't remember the sequence, you can click on" +
+                        "replay sequence. You will have your score displayed at the bottom of the game and a text message that will guide " +
+                        "throughout the game. Have fun !! ");
+                dlgAlert.setTitle("Game general description");
+                dlgAlert.setPositiveButton("OK", null);
+                dlgAlert.setCancelable(false);
+                dlgAlert.create().show();
+
+                dlgAlert.setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+            }
+        });
+
         //TODO add a sharedpreference for the game high score and options
         SharedPreferences mPrefs = getSharedPreferences("settings", 0);
         String topScore = mPrefs.getString("normalScore", "0");
