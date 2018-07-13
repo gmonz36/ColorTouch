@@ -428,6 +428,12 @@ public class PlayNormalActivity extends AppCompatActivity {
         yellowButton.setEnabled(false);
         if(score > topScore) {
             SharedPreferences.Editor mEditor = mPrefs.edit();
+            if (score == 0){
+                score = 0;
+            }
+            else{
+                score++;
+            }
             mEditor.putString("normalScore", score.toString()).commit();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(false);
