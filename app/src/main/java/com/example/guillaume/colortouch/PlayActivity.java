@@ -35,20 +35,54 @@ public class PlayActivity extends AppCompatActivity {
     private Button replay;
     SharedPreferences mPrefs;
     Integer topScore;
+    private SharedPreferences setPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+        setPrefs = getSharedPreferences("settings", 0);
+        String Mute = setPrefs.getString("Mute", "mute");
+        String Quiet = setPrefs.getString("Quiet", "quiet");
+        String Medium = setPrefs.getString("Medium", "medium");
+        String Loud = setPrefs.getString("Loud", "loud");
+
+        String Slow = setPrefs.getString("Slow", "slow");
+        String Normal = setPrefs.getString("Normal", "normal");
+        String Fast = setPrefs.getString("Fast", "fast");
 
         final MediaPlayer redSound = MediaPlayer.create(PlayActivity.this, R.raw.red_beep_short);
-        redSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
         final MediaPlayer blueSound = MediaPlayer.create(PlayActivity.this, R.raw.blue_beep_short);
-        blueSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
         final MediaPlayer greenSound = MediaPlayer.create(PlayActivity.this, R.raw.green_beep_short);
-        greenSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
         final MediaPlayer yellowSound = MediaPlayer.create(PlayActivity.this, R.raw.yellow_beep_short);
-        yellowSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        if (setPrefs.contains(Medium)) {
+            redSound.setVolume(1.5f,1.5f);
+            blueSound.setVolume(1.5f,1.5f);
+            greenSound.setVolume(1.5f,1.5f);
+            yellowSound.setVolume(1.5f,1.5f);
+        }
+
+        else if (setPrefs.contains(Mute)) {
+            redSound.setVolume(0,0);
+            blueSound.setVolume(0,0);
+            greenSound.setVolume(0,0);
+            yellowSound.setVolume(0,0);
+        }
+
+        else if (setPrefs.contains(Loud)){
+            redSound.setVolume(1.75f,1.75f);
+            blueSound.setVolume(1.75f,1.75f);
+            greenSound.setVolume(1.75f,1.75f);
+            yellowSound.setVolume(1.75f,1.75f);
+        }
+
+        else if (setPrefs.contains(Quiet)){
+            redSound.setVolume(1,1);
+            blueSound.setVolume(1,1);
+            greenSound.setVolume(1,1);
+            yellowSound.setVolume(1,1);
+        }
 
         android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
         mActionBar.hide();

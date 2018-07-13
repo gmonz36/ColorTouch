@@ -37,6 +37,7 @@ public class PlayNormalActivity extends AppCompatActivity {
     private int size = 0;
     private int topScore;
     private SharedPreferences mPrefs;
+    private SharedPreferences setPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,22 +85,55 @@ public class PlayNormalActivity extends AppCompatActivity {
         //TODO add a sharedpreference for the game high score and options
 
         mPrefs = getSharedPreferences("BestScores", 0);
+        setPrefs = getSharedPreferences("settings", 0);
+
+         String Mute = setPrefs.getString("Mute", "mute");
+         String Quiet = setPrefs.getString("Quiet", "quiet");
+         String Medium = setPrefs.getString("Medium", "medium");
+         String Loud = setPrefs.getString("Loud", "loud");
+
+         String Slow = setPrefs.getString("Slow", "slow");
+         String Normal = setPrefs.getString("Normal", "normal");
+         String Fast = setPrefs.getString("Fast", "fast");
+
         String bestScore = mPrefs.getString("normalScore", "0");
         topScore = Integer.parseInt(bestScore);
 
         currentScore = (TextView) findViewById(R.id.score);
         currentScore.setText("Score : " + score);
 
-
         final MediaPlayer redSound = MediaPlayer.create(PlayNormalActivity.this, R.raw.red_beep_short);
-        redSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
         final MediaPlayer blueSound = MediaPlayer.create(PlayNormalActivity.this, R.raw.blue_beep_short);
-        blueSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
         final MediaPlayer greenSound = MediaPlayer.create(PlayNormalActivity.this, R.raw.green_beep_short);
-        greenSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
         final MediaPlayer yellowSound = MediaPlayer.create(PlayNormalActivity.this, R.raw.yellow_beep_short);
-        yellowSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
+        if (setPrefs.contains(Medium)) {
+            redSound.setVolume(1.5f,1.5f);
+            blueSound.setVolume(1.5f,1.5f);
+            greenSound.setVolume(1.5f,1.5f);
+            yellowSound.setVolume(1.5f,1.5f);
+        }
+
+        else if (setPrefs.contains(Mute)) {
+            redSound.setVolume(0,0);
+            blueSound.setVolume(0,0);
+            greenSound.setVolume(0,0);
+            yellowSound.setVolume(0,0);
+        }
+
+        else if (setPrefs.contains(Loud)){
+            redSound.setVolume(1.75f,1.75f);
+            blueSound.setVolume(1.75f,1.75f);
+            greenSound.setVolume(1.75f,1.75f);
+            yellowSound.setVolume(1.75f,1.75f);
+        }
+
+        else if (setPrefs.contains(Quiet)){
+            redSound.setVolume(1,1);
+            blueSound.setVolume(1,1);
+            greenSound.setVolume(1,1);
+            yellowSound.setVolume(1,1);
+        }
 
         //initialize game
         //game = new GameController();
