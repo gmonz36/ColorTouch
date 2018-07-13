@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -31,7 +30,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         String selectedVolume = settingsPrefs.getString("volume", "medium");
         String selectedSpeed = settingsPrefs.getString("speed", "normal");
-
 
         volume = (RadioGroup) findViewById(R.id.volume);
         gameSpeed = (RadioGroup) findViewById(R.id.speed);
@@ -63,6 +61,7 @@ public class SettingsActivity extends AppCompatActivity {
                 break;
         }
 
+        //When saved button is clicked all parameters selected in the radioGroups are pushed to the sharedPreferences
         saveButton = (Button) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -96,8 +95,6 @@ public class SettingsActivity extends AppCompatActivity {
                 Toast.makeText(SettingsActivity.this, "settings saved", Toast.LENGTH_SHORT).show();
             }
         });
-
-
 
         backButton = (Button) findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {

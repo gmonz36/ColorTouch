@@ -2,12 +2,12 @@ package com.example.guillaume.colortouch;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
 import java.util.Random;
 
 /**
  * Created by gmonz_000 on 2018-01-01.
+ * This class hold the list that contains the color sequence and the methods to modify it.
  */
 
 public class GameController {

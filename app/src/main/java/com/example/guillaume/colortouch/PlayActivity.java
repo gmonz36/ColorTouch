@@ -3,7 +3,6 @@ package com.example.guillaume.colortouch;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -113,6 +112,7 @@ public class PlayActivity extends AppCompatActivity {
         back = (Button) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                //the line below is to stop the sound from playing after the activity is left if the game was playing a sequence
                 if(!playerTurn) System.exit(0);
                 Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
                 PlayActivity.this.startActivity(myIntent);
@@ -160,7 +160,6 @@ public class PlayActivity extends AppCompatActivity {
                     playerDisplayDelay();
                     lost = game.selectColor(0);
                     if (lost) {
-                        //playerTurn = false;
                         lostGame();
                         return;
                     }
@@ -184,7 +183,6 @@ public class PlayActivity extends AppCompatActivity {
                     playerDisplayDelay();
                     lost = game.selectColor(1);
                     if (lost) {
-                        //playerTurn = false;
                         lostGame();
                         return;
                     }
@@ -207,7 +205,6 @@ public class PlayActivity extends AppCompatActivity {
                     playerDisplayDelay();
                     lost = game.selectColor(2);
                     if (lost) {
-                        //playerTurn = false;
                         lostGame();
                         return;
                     }
@@ -231,7 +228,6 @@ public class PlayActivity extends AppCompatActivity {
                     playerDisplayDelay();
                     lost = game.selectColor(3);
                     if (lost) {
-                        //playerTurn = false;
                         lostGame();
                         return;
                     }
@@ -264,7 +260,6 @@ public class PlayActivity extends AppCompatActivity {
                     playerTurn = false;
                     game.incSequence();
                     ArrayList<Integer> colorList = game.getList();
-                    //displayDelay();
 
                     for (int i = 0; i < colorList.size(); i++) {
                         playNext(i);
@@ -305,20 +300,12 @@ public class PlayActivity extends AppCompatActivity {
         replay.setEnabled(false);
         if(score > topScore) {
             SharedPreferences.Editor mEditor = mPrefs.edit();
-            /*if (score == 0){
-                score = 0;
-            }
-            else{
-                score++;
-            }*/
             mEditor.putString("endlessScore", score.toString()).commit();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(false);
             builder.setMessage("Congratulation!").setTitle("New high score! You missed the sequence but you still reached your highest score.");
             builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    //Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
-                    //PlayActivity.this.startActivity(myIntent);
                 }
             });
             builder.show();
@@ -329,8 +316,6 @@ public class PlayActivity extends AppCompatActivity {
             builder.setMessage("That was the wrong sequence.").setTitle("You lost the game!");
             builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    //Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
-                    //PlayActivity.this.startActivity(myIntent);
                 }
             });
             builder.show();
@@ -341,30 +326,37 @@ public class PlayActivity extends AppCompatActivity {
         updateScoreView();
     }
 
+    /**
+     * make a pressed button animation when the button is clicked
+     * @param v is the button to be clicked
+     */
     private void setClickedView(View v) {
         Button view = (Button) v;
         view.setBackgroundResource(R.drawable.darkb);
-        //view.getBackground().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
         v.invalidate();
     }
 
+    /**
+     * remove the pressed button animation
+     */
     private void clearClickedView() {
         Button view;
         view = (Button) findViewById(R.id.redButton);
         view.setBackgroundResource(R.drawable.rb);
-        //view.getBackground().clearColorFilter();
         view = (Button) findViewById(R.id.blueButton);
         view.setBackgroundResource(R.drawable.bb);
-        //view.getBackground().clearColorFilter();
         view = (Button) findViewById(R.id.greenButton);
         view.setBackgroundResource(R.drawable.gb);
-        //view.getBackground().clearColorFilter();
         view = (Button) findViewById(R.id.yellowButton);
         view.setBackgroundResource(R.drawable.yb);
-        //view.getBackground().clearColorFilter();
         view.invalidate();
     }
 
+    /**
+     * This method select the next button to be pressed in the game sequence
+     * Handler is used to delay the time before a button is pressed
+     * @param n is how many button have previously been pressed in the sequence
+     */
     private void playNext(int n) {
         redButton.setEnabled(false);
         blueButton.setEnabled(false);
@@ -419,6 +411,9 @@ public class PlayActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Keeps the button pressed  for half a second when the game press a button
+     */
     private void displayDelay() {
         Handler handler1 = new Handler();
         handler1.postDelayed(new Runnable() {
@@ -435,6 +430,9 @@ public class PlayActivity extends AppCompatActivity {
         currentScore.setText("Score : " + score);
     }
 
+    /**
+     * This method keeps the pressed button animation for a fifth of a second after the player press the button.
+     */
     private void playerDisplayDelay() {
         Handler handler1 = new Handler();
         handler1.postDelayed(new Runnable() {
@@ -445,9 +443,5 @@ public class PlayActivity extends AppCompatActivity {
                 }
             }
         }, 200);
-    }
-
-    public int getMaxScore(){
-        return score;
     }
 }

@@ -3,7 +3,6 @@ package com.example.guillaume.colortouch;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -130,9 +129,6 @@ public class PlayNormalActivity extends AppCompatActivity {
                 break;
         }
 
-        //initialize game
-        //game = new GameController();
-
         play = (Button) findViewById(R.id.play);
         play.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -163,7 +159,6 @@ public class PlayNormalActivity extends AppCompatActivity {
                     playerDisplayDelay();
                     lost = game.selectColor(0);
                     if (lost) {
-                        //playerTurn = false;
                         lostGame();
                         return;
                     }
@@ -187,7 +182,6 @@ public class PlayNormalActivity extends AppCompatActivity {
                     playerDisplayDelay();
                     lost = game.selectColor(1);
                     if (lost) {
-                        //playerTurn = false;
                         lostGame();
                         return;
                     }
@@ -210,7 +204,6 @@ public class PlayNormalActivity extends AppCompatActivity {
                     playerDisplayDelay();
                     lost = game.selectColor(2);
                     if (lost) {
-                        //playerTurn = false;
                         lostGame();
                         return;
                     }
@@ -234,7 +227,6 @@ public class PlayNormalActivity extends AppCompatActivity {
                     playerDisplayDelay();
                     lost = game.selectColor(3);
                     if (lost) {
-                        //playerTurn = false;
                         lostGame();
                         return;
                     }
@@ -286,8 +278,6 @@ public class PlayNormalActivity extends AppCompatActivity {
             builder.setMessage("Congratulation!").setTitle("New high score! You missed the sequence but you still reached your highest score.");
             builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    //Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
-                    //PlayActivity.this.startActivity(myIntent);
                 }
             });
             builder.show();
@@ -298,8 +288,6 @@ public class PlayNormalActivity extends AppCompatActivity {
             builder.setMessage("That was the wrong sequence.").setTitle("You lost the game!");
             builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    //Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
-                    //PlayActivity.this.startActivity(myIntent);
                 }
             });
             builder.show();
@@ -313,7 +301,6 @@ public class PlayNormalActivity extends AppCompatActivity {
     private void setClickedView(View v) {
         Button view = (Button) v;
         view.setBackgroundResource(R.drawable.darkb);
-        //view.getBackground().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
         v.invalidate();
     }
 
@@ -321,16 +308,12 @@ public class PlayNormalActivity extends AppCompatActivity {
         Button view;
         view = (Button) findViewById(R.id.redButton);
         view.setBackgroundResource(R.drawable.rb);
-        //view.getBackground().clearColorFilter();
         view = (Button) findViewById(R.id.blueButton);
         view.setBackgroundResource(R.drawable.bb);
-        //view.getBackground().clearColorFilter();
         view = (Button) findViewById(R.id.greenButton);
         view.setBackgroundResource(R.drawable.gb);
-        //view.getBackground().clearColorFilter();
         view = (Button) findViewById(R.id.yellowButton);
         view.setBackgroundResource(R.drawable.yb);
-        //view.getBackground().clearColorFilter();
         view.invalidate();
     }
 
@@ -457,20 +440,12 @@ public class PlayNormalActivity extends AppCompatActivity {
         yellowButton.setEnabled(false);
         if(score > topScore) {
             SharedPreferences.Editor mEditor = mPrefs.edit();
-            /*if (score == 0){
-                score = 0;
-            }
-            else{
-                score++;
-            }*/
             mEditor.putString("normalScore", score.toString()).commit();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(false);
             builder.setMessage("Congratulation!").setTitle("New high score!");
             builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    //Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
-                    //PlayActivity.this.startActivity(myIntent);
                 }
             });
             builder.show();
@@ -485,9 +460,5 @@ public class PlayNormalActivity extends AppCompatActivity {
             });
             builder.show();
         }
-    }
-
-    public int getMaxScore(){
-           return score;
     }
 }
