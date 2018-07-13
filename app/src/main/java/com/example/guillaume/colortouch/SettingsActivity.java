@@ -16,13 +16,6 @@ public class SettingsActivity extends AppCompatActivity {
     private Button saveButton;
     private RadioGroup volume;
     private RadioGroup gameSpeed;
-    private RadioButton mute;
-    private RadioButton quiet;
-    private RadioButton medium;
-    private RadioButton loud;
-    private RadioButton slow;
-    private RadioButton normal;
-    private RadioButton fast;
 
 
     @Override
@@ -34,95 +27,73 @@ public class SettingsActivity extends AppCompatActivity {
         mActionBar.hide();
 
         final SharedPreferences settingsPrefs = getSharedPreferences("settings", 0);
-        /*final String Mute = settingsPrefs.getString("Mute", "mute");
-        final String Quiet = settingsPrefs.getString("Quiet", "quiet");
-        final String Medium = settingsPrefs.getString("Medium", "medium");
-        final String Loud = settingsPrefs.getString("Loud", "loud");
-
-        final String Slow = settingsPrefs.getString("Slow", "slow");
-        final String Normal = settingsPrefs.getString("Normal", "normal");
-        final String Fast = settingsPrefs.getString("Fast", "fast");*/
-
         final SharedPreferences.Editor mEditor = settingsPrefs.edit();
 
+        String selectedVolume = settingsPrefs.getString("volume", "medium");
+        String selectedSpeed = settingsPrefs.getString("speed", "normal");
 
 
         volume = (RadioGroup) findViewById(R.id.volume);
         gameSpeed = (RadioGroup) findViewById(R.id.speed);
-        mute = (RadioButton)findViewById(R.id.mute);
-        medium = (RadioButton)findViewById(R.id.medium);
-        quiet = (RadioButton)findViewById(R.id.quiet);
-        loud = (RadioButton)findViewById(R.id.loud);
-        slow = (RadioButton)findViewById(R.id.slow);
-        normal = (RadioButton)findViewById(R.id.normal);
-        fast = (RadioButton)findViewById(R.id.fast);
+
+        switch (selectedVolume) {
+            case "mute":
+                volume.check(R.id.mute);
+                break;
+            case "quiet":
+                volume.check(R.id.quiet);
+                break;
+            case "medium":
+                volume.check(R.id.medium);
+                break;
+            case "loud":
+                volume.check(R.id.loud);
+                break;
+        }
+
+        switch (selectedSpeed) {
+            case "slow":
+                gameSpeed.check(R.id.slow);
+                break;
+            case "normal":
+                gameSpeed.check(R.id.normal);
+                break;
+            case "fast":
+                gameSpeed.check(R.id.fast);
+                break;
+        }
 
         saveButton = (Button) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                volume.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                switch (volume.getCheckedRadioButtonId()) {
+                    case R.id.mute:
+                        mEditor.putString("volume", "mute").commit();
+                        break;
+                    case R.id.quiet:
+                        mEditor.putString("volume", "quiet").commit();
+                        break;
+                    case R.id.medium:
+                        mEditor.putString("volume", "medium").commit();
+                        break;
+                    case R.id.loud:
+                        mEditor.putString("volume", "loud").commit();
+                        break;
+                }
 
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                       if(mute.isChecked())
-                        {
-                            volume.check(R.id.mute);
-                            String Mute = "mute";
-                            mEditor.putString("Mute", Mute).commit();
-                        }
-                        else if (medium.isChecked())
-                        {
-                            volume.check(R.id.medium);
-                            String Medium = "medium";
-                            mEditor.putString("Medium", Medium).commit();
-                        }
-                        else if (loud.isChecked())
-                        {
-                            volume.check(R.id.loud);
-                            String Loud = "Loud";
-                            mEditor.putString("Loud", Loud).commit();
-                        }
+                switch (gameSpeed.getCheckedRadioButtonId()) {
+                    case R.id.slow:
+                        mEditor.putString("speed", "slow").commit();
+                        break;
+                    case R.id.normal:
+                        mEditor.putString("speed", "normal").commit();
+                        break;
+                    case R.id.fast:
+                        mEditor.putString("speed", "fast").commit();
+                        break;
+                }
 
-                        else{
-                            volume.check(R.id.quiet);
-                            String Quiet = "quiet";
-                           mEditor.putString("Quiet", Quiet).commit();
-                        }
-
-
-                    }
-                });
-
-                gameSpeed.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-
-
-                        if(slow.isChecked())
-                        {
-                            gameSpeed.check(R.id.slow);
-                            String Slow = "slow";
-                            mEditor.putString("Mute", Slow).commit();
-                        }
-                        else if (fast.isChecked())
-                        {
-                            gameSpeed.check(R.id.fast);
-                            String Fast = "fast";
-                            mEditor.putString("Mute", Fast).commit();
-                        }
-
-                        else{
-                            gameSpeed.check(R.id.normal);
-                            String Normal = "normal";
-                            mEditor.putString("Mute", Normal).commit();
-                        }
-
-
-                    }
-                });
-                Toast.makeText(SettingsActivity.this, "Settings chosen saved !!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SettingsActivity.this, "settings saved", Toast.LENGTH_SHORT).show();
             }
         });
 

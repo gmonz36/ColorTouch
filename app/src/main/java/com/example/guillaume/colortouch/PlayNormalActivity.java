@@ -38,6 +38,7 @@ public class PlayNormalActivity extends AppCompatActivity {
     private int topScore;
     private SharedPreferences mPrefs;
     private SharedPreferences setPrefs;
+    private int waitTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,6 @@ public class PlayNormalActivity extends AppCompatActivity {
 
         android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
         mActionBar.hide();
-
 
         info = (TextView) findViewById(R.id.info);
 
@@ -66,35 +66,29 @@ public class PlayNormalActivity extends AppCompatActivity {
 
                 dlgAlert.setMessage("There's four buttons(blue, red, green and yellow). You have to watch the sequence " +
                         "as shown to you and repeat it in the exact same order, if you don't remember the sequence, you can click on" +
-                        " replay sequence. You will have your score displayed at the top of the screen and a text message that will guide " +
-                        " you throughout the game. Have fun !! ");
+                        " replay sequence. You will have your score displayed at the top of the screen to see your progress.");
                 dlgAlert.setTitle("Game general description");
                 dlgAlert.setPositiveButton("OK", null);
                 dlgAlert.setCancelable(false);
                 dlgAlert.create().show();
-
-                dlgAlert.setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        });
             }
         });
-
-        //TODO add a sharedpreference for the game high score and options
 
         mPrefs = getSharedPreferences("BestScores", 0);
         setPrefs = getSharedPreferences("settings", 0);
 
-         String Mute = setPrefs.getString("Mute", "mute");
-         String Quiet = setPrefs.getString("Quiet", "quiet");
-         String Medium = setPrefs.getString("Medium", "medium");
-         String Loud = setPrefs.getString("Loud", "loud");
-
-         String Slow = setPrefs.getString("Slow", "slow");
-         String Normal = setPrefs.getString("Normal", "normal");
-         String Fast = setPrefs.getString("Fast", "fast");
+        String speed = setPrefs.getString("speed", "normal");
+        switch (speed) {
+            case "fast":
+                waitTime = 750;
+                break;
+            case "normal":
+                waitTime = 1000;
+                break;
+            case "slow":
+                waitTime = 1250;
+                break;
+        }
 
         String bestScore = mPrefs.getString("normalScore", "0");
         topScore = Integer.parseInt(bestScore);
@@ -107,32 +101,33 @@ public class PlayNormalActivity extends AppCompatActivity {
         final MediaPlayer greenSound = MediaPlayer.create(PlayNormalActivity.this, R.raw.green_beep_short);
         final MediaPlayer yellowSound = MediaPlayer.create(PlayNormalActivity.this, R.raw.yellow_beep_short);
 
-        if (setPrefs.contains(Medium)) {
-            redSound.setVolume(1.5f,1.5f);
-            blueSound.setVolume(1.5f,1.5f);
-            greenSound.setVolume(1.5f,1.5f);
-            yellowSound.setVolume(1.5f,1.5f);
-        }
+        String volume = setPrefs.getString("volume", "medium");
 
-        else if (setPrefs.contains(Mute)) {
-            redSound.setVolume(0,0);
-            blueSound.setVolume(0,0);
-            greenSound.setVolume(0,0);
-            yellowSound.setVolume(0,0);
-        }
-
-        else if (setPrefs.contains(Loud)){
-            redSound.setVolume(1.75f,1.75f);
-            blueSound.setVolume(1.75f,1.75f);
-            greenSound.setVolume(1.75f,1.75f);
-            yellowSound.setVolume(1.75f,1.75f);
-        }
-
-        else if (setPrefs.contains(Quiet)){
-            redSound.setVolume(1,1);
-            blueSound.setVolume(1,1);
-            greenSound.setVolume(1,1);
-            yellowSound.setVolume(1,1);
+        switch (volume) {
+            case "mute":
+                redSound.setVolume(0.0f,0.0f);
+                blueSound.setVolume(0.0f,0.0f);
+                greenSound.setVolume(0.0f,0.0f);
+                yellowSound.setVolume(0.0f,0.0f);
+                break;
+            case "quiet":
+                redSound.setVolume(0.2f,0.2f);
+                blueSound.setVolume(0.2f,0.2f);
+                greenSound.setVolume(0.2f,0.2f);
+                yellowSound.setVolume(0.2f,0.2f);
+                break;
+            case "medium":
+                redSound.setVolume(0.5f,0.5f);
+                blueSound.setVolume(0.5f,0.5f);
+                greenSound.setVolume(0.5f,0.5f);
+                yellowSound.setVolume(0.5f,0.5f);
+                break;
+            case "loud":
+                redSound.setVolume(1.0f,1.0f);
+                blueSound.setVolume(1.0f,1.0f);
+                greenSound.setVolume(1.0f,1.0f);
+                yellowSound.setVolume(1.0f,1.0f);
+                break;
         }
 
         //initialize game
@@ -263,7 +258,7 @@ public class PlayNormalActivity extends AppCompatActivity {
 
     private void playSequence() {
         playerTurn = false;
-        info.setText("Watch and do the same sequence");
+        info.setText("Watch then do the same sequence");
         try {
             if (playerTurn) Thread.sleep(1000);
         } catch (Exception e) {
@@ -288,7 +283,7 @@ public class PlayNormalActivity extends AppCompatActivity {
             mEditor.putString("normalScore", score.toString()).commit();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(false);
-            builder.setMessage("Congratulation!").setTitle("New high score!");
+            builder.setMessage("Congratulation!").setTitle("New high score! You missed the sequence but you still reached your highest score.");
             builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     //Intent myIntent = new Intent(PlayActivity.this, GameModesActivity.class);
@@ -389,7 +384,7 @@ public class PlayNormalActivity extends AppCompatActivity {
                 }
 
             }
-        }, 1250 * n);
+        }, waitTime * n);
 
     }
 
@@ -462,12 +457,12 @@ public class PlayNormalActivity extends AppCompatActivity {
         yellowButton.setEnabled(false);
         if(score > topScore) {
             SharedPreferences.Editor mEditor = mPrefs.edit();
-            if (score == 0){
+            /*if (score == 0){
                 score = 0;
             }
             else{
                 score++;
-            }
+            }*/
             mEditor.putString("normalScore", score.toString()).commit();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(false);

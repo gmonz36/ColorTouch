@@ -29,11 +29,6 @@ public class MainActivity extends AppCompatActivity {
         android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
         mActionBar.hide();
 
-        MediaPlayer startSound= MediaPlayer.create(MainActivity.this,R.raw.menu_start);
-        startSound.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        startSound.start();
-
-
         playButton = (Button) findViewById(R.id.playButton);
         playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
