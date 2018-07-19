@@ -275,7 +275,7 @@ public class PlayNormalActivity extends AppCompatActivity {
             mEditor.putString("normalScore", score.toString()).commit();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(false);
-            builder.setMessage("Congratulation!").setTitle("New high score! You missed the sequence but you still reached your highest score.");
+            builder.setMessage("Congratulation! You missed the sequence but you still reached your highest score.").setTitle("New high score!");
             builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                 }
